@@ -38,15 +38,21 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
+mongoose.connect(Config.mongodburl, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+});
+mongoose.set("strictQuery", true);
+
+const connection = mongoose.connection;
+
+connection.on("open", () => {
+  console.log("connected.....");
+});
+
 app.use("/auth", auth);
 app.use("/mobile", mobile);
 app.use("/web", web);
-
-mongoose.Promise = require("bluebird");
-mongoose
-  .connect(Config.mongodburl, { promiseLibrary: require("bluebird") })
-  .then(() => console.log("DB Connected"))
-  .catch((err) => console.log(err));
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
