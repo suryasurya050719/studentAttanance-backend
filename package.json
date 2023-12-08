@@ -1,0 +1,25 @@
+{
+  "name": "thewaterman-api",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "start": "nodemon app.js"
+  },
+  "dependencies": {
+    "axios": "^1.1.3",
+    "bcrypt": "^5.1.1",
+    "bluebird": "^3.7.2",
+    "cookie-parser": "~1.4.4",
+    "debug": "~2.6.9",
+    "express": "~4.16.1",
+    "express-jwt": "^8.4.1",
+    "http-errors": "~1.6.3",
+    "id-auto-increment": "^1.0.1",
+    "jade": "~1.11.0",
+    "jsonwebtoken": "^8.5.1",
+    "mongodb": "^5.8.0",
+    "mongoose": "^6.6.5",
+    "morgan": "~1.9.1",
+    "nodemon": "^2.0.22"
+  }
+}
