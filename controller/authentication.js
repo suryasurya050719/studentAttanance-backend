@@ -54,7 +54,7 @@ module.exports = {
                 }
             });
         } catch (error) {
-            return returnRes(res, 500, false, "Something went wrong!", err);;
+            return returnRes(res, 500, false, "Something went wrong!", error);;
         }
     },
 };
