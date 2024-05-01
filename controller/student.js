@@ -13,12 +13,13 @@ module.exports = {
     Create: async function (req, res) {
         try {
             const body = req.body;
-            studentSchema.validate(req.body)
-            const { profilePic, birthCertificate } = req.files
-            console.log(!profilePic || !birthCertificate || (profilePic.length == 0) || (birthCertificate.length == 0))
-            if (!profilePic || !birthCertificate || (profilePic.length == 0) || (birthCertificate.length == 0)) {
+            await studentSchema.validateAsync(req.body)
+            
+            if ( !req.files || !req.files.profilePic || !req.files.birthCertificate || (req.files.profilePic.length == 0) || (req.files.birthCertificate.length == 0)) {
                 return returnRes(res, 422, false, "please fill the required media field");
             }
+            const { profilePic, birthCertificate } = req.files
+            console.log(!profilePic || !birthCertificate || (profilePic.length == 0) || (birthCertificate.length == 0))
             if (profilePic[0].mimetype != 'image/jpeg' || birthCertificate[0].mimetype != `application/pdf`) {
                 return returnRes(res, 422, false, "Invalid media type");
             }
@@ -33,7 +34,7 @@ module.exports = {
             });
         } catch (error) {
             console.log(error);
-            return returnRes(res, 500, false, "Something went wrong!", err);
+            return returnRes(res, 500, false, "Something went wrong!", error);
         }
     },
     Get: async function (req, res) {

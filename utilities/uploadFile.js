@@ -12,7 +12,7 @@ const s3 = new S3Client({
 })
 
 const uploadFile = async(file)=>{
-const newFileName = `${Date.now()}${file.originalname}`
+const newFileName = `${Date.now()}${file.originalname.toLowerCase().replaceAll(' ','').replaceAll('+','')}`
     const params = new PutObjectCommand( {
         ACL:'public-read',
         Bucket:bucketName,
