@@ -13,6 +13,7 @@ router.post("/userCreate", user.Create);
 
 router.post("/studentCreate", upload.fields([{ name: 'birthCertificate', maxCount: 1 }, { name: 'profilePic', maxCount: 1 }]), student.Create);
 router.get("/studentGet", student.Get);
+// router.get("/getAllStudents", student.GetAll);
 
 
 

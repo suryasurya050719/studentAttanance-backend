@@ -1,9 +1,9 @@
 const mongoose = require('mongoose');
+const mongooseSequenece = require('mongoose-sequence')
 
 const studentType = new mongoose.Schema({
     userName: String,
     email: String,
-    rollNo: String,
     classSection: String,
     aadharNo: String,
     bloodGroup: String,
@@ -15,8 +15,8 @@ const studentType = new mongoose.Schema({
     fatherName: String,
     motherName: String,
     fatherOccupation: String,
-    gordianName: String,
-    gordianOccupation: String,
+    guardianName: String,
+    guardianOccupation: String,
     salary: String,
     residentialAddress: String,
     mobileNo: String,
@@ -24,6 +24,10 @@ const studentType = new mongoose.Schema({
     scar: String,
     mole: String,
 })
+
+if(!mongoose.model?.student){
+    studentType.plugin(mongooseSequenece(mongoose),{inc_field:"rollNo",start_seq: 100000})
+}
 
 const student = mongoose.model("student", studentType);
 module.exports = student;

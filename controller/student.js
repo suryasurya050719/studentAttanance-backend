@@ -14,12 +14,10 @@ module.exports = {
         try {
             const body = req.body;
             await studentSchema.validateAsync(req.body)
-            
             if ( !req.files || !req.files.profilePic || !req.files.birthCertificate || (req.files.profilePic.length == 0) || (req.files.birthCertificate.length == 0)) {
                 return returnRes(res, 422, false, "please fill the required media field");
             }
             const { profilePic, birthCertificate } = req.files
-            console.log(!profilePic || !birthCertificate || (profilePic.length == 0) || (birthCertificate.length == 0))
             if (profilePic[0].mimetype != 'image/jpeg' || birthCertificate[0].mimetype != `application/pdf`) {
                 return returnRes(res, 422, false, "Invalid media type");
             }
@@ -27,7 +25,7 @@ module.exports = {
             body.birthCertificate = await uploadFile(birthCertificate[0])
             studentDetail.create(body, async (err, register) => {
                 if (err) {
-                    return returnRes(res, 200, false, "student Not Created ", err);
+                    return returnRes(res, 400, false, "student Not Created ", err);
                 } else {
                     return returnRes(res, 200, true, "student Created Successfully", register);
                 }
@@ -42,7 +40,7 @@ module.exports = {
         try {
             studentDetail.find(function (err, studentDetail) {
                 if (err) {
-                    return returnRes(res, 200, false, "Something Went Wrong!");
+                    return returnRes(res, 400, false, "Something Went Wrong!");
                 } else {
                     return returnRes(res, 200, true, "List Generated", studentDetail);
                 }
@@ -50,5 +48,5 @@ module.exports = {
         } catch (error) {
             return returnRes(res, 500, false, "Something Went Wrong!");
         }
-    },
+    }
 };
