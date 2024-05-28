@@ -21,5 +21,15 @@ module.exports = {
         transport: Joi.string().required(),
         scar: Joi.string().allow(''),
         mole: Joi.string().allow('')
-    })
+    }),
+    teacherSchema: Joi.object({
+        teacherName: Joi.string().required(),
+        email: Joi.string().email().required(),
+        subject: Joi.string().required(),
+        aadharNo: Joi.string().pattern(new RegExp('^[0-9]{12}$')).required(),
+        bloodGroup: Joi.string().required(),
+        dateOfBirth: Joi.string().required(),
+        community: Joi.string().required(),
+        address: Joi.string().required(),
+        mobileNo: Joi.string().pattern(new RegExp('^[0-9]{10}$')).required()})
 }
