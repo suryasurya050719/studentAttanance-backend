@@ -6,7 +6,7 @@ module.exports = {
         email: Joi.string().email().required(),
         classSection: Joi.string().required(),
         aadharNo: Joi.string().pattern(new RegExp('^[0-9]{12}$')).required(),
-        bloodGroup: Joi.string().required(),
+        bloodGroup: Joi.string().valid('A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-').required(),
         dateOfBirth: Joi.string().required(),
         community: Joi.string().required(),
         address: Joi.string().required(),
@@ -27,9 +27,23 @@ module.exports = {
         email: Joi.string().email().required(),
         subject: Joi.string().required(),
         aadharNo: Joi.string().pattern(new RegExp('^[0-9]{12}$')).required(),
-        bloodGroup: Joi.string().required(),
+        bloodGroup:  Joi.string().valid('A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-').required(),
         dateOfBirth: Joi.string().required(),
         community: Joi.string().required(),
         address: Joi.string().required(),
-        mobileNo: Joi.string().pattern(new RegExp('^[0-9]{10}$')).required()})
+        mobileNo: Joi.string().pattern(new RegExp('^[0-9]{10}$')).required()
+    }),
+        driverSchema : Joi.object({
+            driverName: Joi.string().min(1).required(),
+            email: Joi.string().email().required(),
+            aadharNo: Joi.string().length(12).pattern(/^[0-9]+$/).required(),
+            bloodGroup: Joi.string().valid('A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-').required(),
+            dateOfBirth: Joi.string().required(),
+            address: Joi.string().min(1).required(),
+            mobileNo: Joi.string().pattern(/^[0-9]{10}$/).required(),
+            licenseNumber: Joi.string().min(1).required(),
+            insuranceNumber: Joi.string().min(1).required(),
+            busRegNumber: Joi.string().min(1).required(),
+            fitnessCertificate: Joi.string().min(1).required()
+        })
 }

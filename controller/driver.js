@@ -1,6 +1,6 @@
-const teacherModel = require("../models/teacher");
+const driverModel = require("../models/driver");
 const returnRes = require("../utilities/responseHandler");
-const { teacherSchema } = require('../joi/joiValidation')
+const { driverSchema } = require('../joi/joiValidation')
 const { uploadFile } = require('../utilities/uploadFile')
 
 
@@ -8,7 +8,7 @@ module.exports = {
     Create: async function (req, res) {
         try {
             const body = req.body;
-            await teacherSchema.validateAsync(req.body)
+            await driverSchema.validateAsync(req.body)
             if ( !req.files || !req.files.profilePic || !req.files.birthCertificate || (req.files.profilePic.length == 0) || (req.files.birthCertificate.length == 0)) {
                 return returnRes(res, 422, false, "please fill the required media field");
             }
@@ -18,24 +18,25 @@ module.exports = {
             }
             body.profilePic = await uploadFile(profilePic[0])
             body.birthCertificate = await uploadFile(birthCertificate[0])
-            teacherModel.create(body, async (err, register) => {
+            driverModel.create(body, async (err, register) => {
                 if (err) {
-                    return returnRes(res, 400, false, "Teacher Not Created ", err);
+                    return returnRes(res, 400, false, "Driver Not Created ", err);
                 } else {
-                    return returnRes(res, 200, true, "Teacher Created Successfully", register);
+                    return returnRes(res, 200, true, "Driver Created Successfully", register);
                 }
             });
         } catch (error) {
+            console.log(error);
             return returnRes(res, 500, false, "Something went wrong!", error);
         }
     },
     GetAll: async function (req, res) {
         try {
-            teacherModel.find(function (err, teacherModel) {
+            driverModel.find(function (err, driverModel) {
                 if (err) {
                     return returnRes(res, 400, false, "Something Went Wrong!");
                 } else {
-                    return returnRes(res, 200, true, "List Generated", teacherModel);
+                    return returnRes(res, 200, true, "List Generated", driverModel);
                 }
             });
         } catch (error) {
@@ -44,12 +45,12 @@ module.exports = {
     },
     Get: async function(req,res){
         try {
-            teacherModel.findById({_id:req.params.id},function (err, teacherModel) {
+            driverModel.findById({_id:req.params.id},function (err, driverModel) {
                 if (err) {
                     console.log(err);
                     return returnRes(res, 400, false, "Something Went Wrong!");
                 } else {
-                    return returnRes(res, 200, true, "Teacher Retrived", teacherModel);
+                    return returnRes(res, 200, true, "Driver Retrived", driverModel);
                 }
             });
         } catch (error) {
@@ -58,15 +59,15 @@ module.exports = {
     },
     Delete: async function(req,res){
         try {
-            teacherModel.findByIdAndDelete({_id:req.params.id},function (err, teacherModel) {
+            driverModel.findByIdAndDelete({_id:req.params.id},function (err, driverModel) {
                 if (err) {
                     console.log(err);
                     return returnRes(res, 400, false, "Something Went Wrong!");
                 } else {
-                    if(!teacherModel){
-                        return returnRes(res, 404, false, "Teacher Record Not Found", teacherModel);
+                    if(!driverModel){
+                        return returnRes(res, 404, false, "Driver Record Not Found", driverModel);
                     }
-                    return returnRes(res, 200, true, "Teacher Deleted", teacherModel);
+                    return returnRes(res, 200, true, "Driver Deleted", driverModel);
                 }
             });
         } catch (error) {
@@ -75,15 +76,16 @@ module.exports = {
     },
     Update: async function(req,res){
         try {
-            await teacherSchema.validateAsync(req.body)
-            teacherModel.findByIdAndUpdate({_id:req.params.id},req.body,{ new: true, runValidators: true },function (err, teacherModel) {
+            await driverSchema.validateAsync(req.body)
+            driverModel.findByIdAndUpdate({_id:req.params.id},req.body,{ new: true, runValidators: true },function (err, driverModel) {
                 if (err) {
+                    console.log(err);
                     return returnRes(res, 400, false, "Something Went Wrong!");
                 } else {
-                    if(!teacherModel){
-                        return returnRes(res, 404, false, "Teacher Record Not Found", teacherModel);
+                    if(!driverModel){
+                        return returnRes(res, 404, false, "Driver Record Not Found", driverModel);
                     }
-                    return returnRes(res, 200, true, "Teacher Updated", teacherModel);
+                    return returnRes(res, 200, true, "Driver Updated", driverModel);
                 }
             });
         } catch (error) {

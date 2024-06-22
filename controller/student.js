@@ -31,12 +31,10 @@ module.exports = {
                 }
             });
         } catch (error) {
-            console.log(error);
             return returnRes(res, 500, false, "Something went wrong!", error);
         }
     },
     Get: async function (req, res) {
-        console.log("sdklk")
         try {
             studentDetail.find(function (err, studentDetail) {
                 if (err) {
